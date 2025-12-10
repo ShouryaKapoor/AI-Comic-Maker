@@ -6,19 +6,33 @@
    <img width="1201" height="707" alt="8" src="https://github.com/user-attachments/assets/747df9d0-1c31-4bf7-b1c7-458f5fefe159" />
 </div>
 
-# Run and deploy your AI Studio app
+# ⚡ One-Shot Comic Maker
 
-This contains everything you need to run your app locally.
+**Turn your ideas into visual stories in seconds.**
 
-View your app in AI Studio: https://ai.studio/apps/drive/1nLedHBbUjaJoxnnbh_0lwksBBd2S37DJ
+One-Shot Comic Maker is an AI-powered web application that generates complete comic strips—script, dialogue, and panel art—from a single text prompt. It leverages the multimodal capabilities of **Google Gemini 2.5 Flash** for storytelling and **Imagen 3** for high-fidelity image generation.
 
-## Run Locally
+![Demo Screenshot](path/to/screenshot.png)
 
-**Prerequisites:**  Node.js
+## 🚀 Features
 
+-   **Instant Storyboarding:** Generates a cohesive script, character definitions, and panel descriptions automatically.
+-   **AI Image Generation:** Uses Google's Imagen 3 model to create consistent, cinematic panel art.
+-   **Smart Context:** Maintains art style and character consistency across multiple panels.
+-   **Modern UI:** Built with **React 19**, **Vite**, and **Framer Motion** for a smooth, animated experience.
+-   **Interactive Viewer:** Read your generated comics in a dedicated comic book view.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🛠️ Tech Stack
+
+-   **Frontend:** React, TypeScript, Vite
+-   **AI:** Google Gemini API (Gemini 2.5 Flash & Imagen 3)
+-   **Styling:** Tailwind CSS
+-   **Animations:** Framer Motion
+-   **Icons:** Lucide React
+
+## 📦 Getting Started
+
+1.  Clone the repo
+2.  `npm install`
+3.  Add your `NEXT_PUBLIC_GEMINI_API_KEY` to `.env.local`
+4.  `npm run dev`
