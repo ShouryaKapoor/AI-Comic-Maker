@@ -99,37 +99,31 @@ export const generatePanelImage = async (
   try {
     // We compose a prompt that includes the style AND character definitions to maintain consistency
     const fullPrompt = `
-      Art Style: ${style}
-      Consistent Character/Setting Details: ${characterDefinitions}
-      Current Scene Action: ${panel.visualPrompt}
-      
-      Generate a high-quality comic book panel. 
-      Framing: Cinematic. 
-      Ratio: Square (1:1).
+      comic book panel, ${style} style.
+      ${characterDefinitions}
+      Action: ${panel.visualPrompt}
+      high quality, detailed, cinematic lighting.
     `.trim();
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-image",
-      contents: {
-        parts: [{ text: fullPrompt }],
-      },
-      config: {
-        // Nano banana models don't support responseMimeType or Schema
-        // We rely on extracting inlineData
-      },
-    });
+    // Use Pollinations.ai (Free, No API Key required)
+    // We use the 'flux' model for better quality
+    const encodedPrompt = encodeURIComponent(fullPrompt);
+    const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&model=flux&nologo=true`;
 
-    // Extract image from parts
-    const parts = response.candidates?.[0]?.content?.parts;
-    if (parts) {
-        for (const part of parts) {
-            if (part.inlineData && part.inlineData.data) {
-                return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-            }
-        }
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Pollinations API error: ${response.statusText}`);
     }
 
-    throw new Error("No image data found in response.");
+    const blob = await response.blob();
+    
+    // Convert Blob to Base64 Data URL so it works with your existing UI
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
 
   } catch (error) {
     console.error(`Error generating image for panel ${panel.id}:`, error);
